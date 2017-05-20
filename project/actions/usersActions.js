@@ -1,4 +1,5 @@
 import { GET_USERS } from './types'
+import firebase from 'firebase'
 
 const mockData = {
   '0': {
@@ -27,8 +28,11 @@ const mockData = {
 
 
 export const getUsers = () => async dispatch => {
-  const users = await mockData
-  dispatch({ type: GET_USERS, users })
+  firebase.database().ref('users/').on('value', dataSnapshot => {
+
+    dispatch({ type: GET_USERS, users: dataSnapshot.val() })
+  })
+
 }
 
 /*latitude: 37.78825,

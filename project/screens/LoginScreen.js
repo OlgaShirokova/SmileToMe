@@ -1,27 +1,34 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, TouchableHighlight, Alert } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableHighlight, Alert, ActivityIndicator } from 'react-native';
 import { Facebook } from 'expo';
+import { connect } from 'react-redux'
+import * as actions from '../actions'
 
-export default class LoginScreen extends Component {
+class LoginScreen extends Component {
   static propTypes = {}
   state = {}
 
 
   _handleLogIn = async () => {
-    const { type, token } = await Facebook.logInWithReadPermissionsAsync('1993780664185469', {
-      permissions: ['public_profile']
-    });
-    if (type === 'success') {
-    // Get the user's name using Facebook's Graph API
-      const response = await fetch(
-        `https://graph.facebook.com/me?access_token=${token}`);
-      Alert.alert(
-        'Logged in!',
-        `Hi ${(await response.json()).name}!`,
-      );
-    }
+    this.props.signIn()
   }
+
   render () {
+    return this.props.isAuthenticating ? this._renderLoadingIndicator() : this._renderMainScreen()
+  }
+
+
+  _renderLoadingIndicator () {
+    return (
+      <Image source={require('../assets/theGif.gif')} style={styles.container}>
+        <Image source={require('../assets/logo.png')} style={styles.logo} />
+        <Text style={styles.title}>Smile to Me</Text>
+        <ActivityIndicator color="white" size="large" style={styles.loadingIndicator} />
+      </Image>
+    )
+  }
+
+  _renderMainScreen () {
     return (
       <Image source={require('../assets/theGif.gif')} style={styles.container}>
         <Image source={require('../assets/logo.png')} style={styles.logo} />
@@ -156,5 +163,16 @@ const styles = StyleSheet.create({
     },
   },
   TouchableHighlight: {
+  },
+  loadingIndicator: {
+    transform: [ {scale: 3}],
+    paddingTop: 40,
   }
 })
+
+function mapStateToProps ({ auth }) {
+  return { uid: auth.authedUID, isAuthenticating: auth.authenticating }
+}
+
+
+export default connect(mapStateToProps, actions)(LoginScreen)

@@ -11,6 +11,19 @@ import {
 } from './screens'
 import { Provider } from 'react-redux'
 import store from './store'
+import './firebase'
+import { connect } from 'react-redux'
+
+class AppContainer extends React.Component {
+  render () {
+    return (
+      <Provider store={store}>
+        <ConnectedApp {...this.props} />
+      </Provider>
+    )
+  }
+}
+
 
 class App extends React.Component {
   render() {
@@ -29,14 +42,16 @@ class App extends React.Component {
 
   } })
 
-    return (
-      // <Provider store={store}>
-      //   <MainNavigator />
-      // </Provider>
-      <LoginScreen />
-    );
+    return  this.props.uid ? <MainNavigator /> : <LoginScreen />
   }
 }
+
+
+function mapStateToProps ({ auth }) {
+  return { uid: auth.authedUID }
+}
+
+const ConnectedApp = connect(mapStateToProps)(App)
 
 const styles = StyleSheet.create({
   container: {
@@ -47,4 +62,4 @@ const styles = StyleSheet.create({
   },
 });
 
-Expo.registerRootComponent(App);
+Expo.registerRootComponent(AppContainer);

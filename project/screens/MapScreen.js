@@ -63,6 +63,7 @@ class MapScreen extends Component {
   }
 
   render () {
+
     return (
       <View style={{flex: 1}}>
         <MapView
@@ -119,7 +120,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps ({ users }) {
   return {
-    users: Object.values(users)
+    users: Object.values(users),
   }
 }
 
