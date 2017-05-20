@@ -1,25 +1,26 @@
-import React, { Component } from 'react'
-import { View, Text, StyleSheet, Image, TouchableHighlight } from 'react-native'
+import React, { Component } from 'react';
+import { View, Text, StyleSheet, Image, TouchableHighlight, Alert } from 'react-native';
+import { Facebook } from 'expo';
 
 export default class LoginScreen extends Component {
   static propTypes = {}
   state = {}
 
-  // const logIn = async () => {
-  //   const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('<APP_ID>', {
-  //       permissions: ['public_profile'],
-  //     });
-  //   if (type === 'success') {
-  //     // Get the user's name using Facebook's Graph API
-  //     const response = await fetch(
-  //       `https://graph.facebook.com/me?access_token=${token}`);
-  //     Alert.alert(
-  //       'Logged in!',
-  //       `Hi ${(await response.json()).name}!`,
-  //     );
-  //   }
-  // }
 
+  logIn = async () => {
+    const { type, token } = await Facebook.logInWithReadPermissionsAsync('1993780664185469', {
+      permissions: ['public_profile']
+    });
+    if (type === 'success') {
+    // Get the user's name using Facebook's Graph API
+      const response = await fetch(
+        `https://graph.facebook.com/me?access_token=${token}`);
+      Alert.alert(
+        'Logged in!',
+        `Hi ${(await response.json()).name}!`,
+      );
+    }
+  }
   render () {
     return (
       <Image source={require('../assets/theGif.gif')} style={styles.container}>
@@ -152,4 +153,6 @@ const styles = StyleSheet.create({
       width: 0
     },
   },
+  TouchableHighlight: {
+  }
 })
