@@ -1,7 +1,7 @@
 import Expo from 'expo'
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { TabNavigator, StackNavigator } from 'react-navigation';
+// import { TabNavigator, StackNavigator } from 'react-navigation';
 import {
   MapScreen,
   ModalScreen,
@@ -12,24 +12,24 @@ import {
 
 class App extends React.Component {
   render() {
-    const MainNavigator = StackNavigator({
-      main: { screen: TabNavigator({
-        map: { screen: MapScreen },
-        partners: { screen: PartnersScreen },
-        profile: { screen: ProfileScreen },
-      }, {
-        tabBarOptions: { activeTintColor: '#FF585B', labelStyle: { fontSize: 12 }, style: { backgroundColor: 'white' } }
-      })},
-      modal: { screen: ModalScreen },
-    }, { mode: 'modal', navigationOptions: {
-      headerStyle: { backgroundColor: 'white', },
-      headerTitleStyle: { color: '#FF585B', fontSize: 20 }
-
-  } })
+  //   const MainNavigator = StackNavigator({
+  //     main: { screen: TabNavigator({
+  //       map: { screen: MapScreen },
+  //       partners: { screen: PartnersScreen },
+  //       profile: { screen: ProfileScreen },
+  //     }, {
+  //       tabBarOptions: { activeTintColor: '#FF585B', labelStyle: { fontSize: 12 }, style: { backgroundColor: 'white' } }
+  //     })},
+  //     modal: { screen: ModalScreen },
+  //   }, { mode: 'modal', navigationOptions: {
+  //     headerStyle: { backgroundColor: 'white', },
+  //     headerTitleStyle: { color: '#FF585B', fontSize: 20 }
+  //
+  // } })
 
     return (
-      <MainNavigator />
-      // <LoginScreen />
+      // <MainNavigator />
+      <LoginScreen />
     );
   }
 }
