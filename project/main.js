@@ -7,7 +7,9 @@ import {
   ModalScreen,
   PartnersScreen,
   ProfileScreen,
-  LoginScreen
+  LoginScreen,
+  Timer,
+  Notifications
 } from './screens'
 import { Provider } from 'react-redux'
 import store from './store'
@@ -33,7 +35,8 @@ class App extends React.Component {
       // <Provider store={store}>
       //   <MainNavigator />
       // </Provider>
-      <LoginScreen />
+      // <LoginScreen />
+      <ModalScreen />
     );
   }
 }
