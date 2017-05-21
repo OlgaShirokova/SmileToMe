@@ -45,7 +45,7 @@ class ModalScreen extends Component {
           <View style={styles.imgView}>
           <Image
             style={styles.img}
-            source={{ uri: this.props.user.avatarURL }}
+            source={require('../assets/julia.png')}
           />
           <Text style={styles.name}> {this.props.user.name} </Text>
 
