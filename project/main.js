@@ -35,8 +35,8 @@ class App extends React.Component {
       // <Provider store={store}>
       //   <MainNavigator />
       // </Provider>
-      // <LoginScreen />
       <ModalScreen />
+      // <Timer />
     );
   }
 }

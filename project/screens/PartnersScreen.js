@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: '#ff5a60',
-    backgroundColor: 'white',
+    backgroundColor: 'transparent',
     alignItems: 'center',
     width: 60,
     height: 60

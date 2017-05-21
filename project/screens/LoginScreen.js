@@ -23,7 +23,7 @@ export default class LoginScreen extends Component {
   }
   render () {
     return (
-      <Image source={require('../assets/theGif.gif')} style={styles.container}>
+      <Image source={require('../assets/theFinalGif.gif')} style={styles.container}>
         <Image source={require('../assets/logo.png')} style={styles.logo} />
         <Text style={styles.title}>Smile to Me</Text>
         <Text style={styles.pitchTitle}>Empower the real connections</Text>
@@ -156,6 +156,6 @@ const styles = StyleSheet.create({
     },
   },
   TouchableHighlight: {
-    
+
   }
 })
