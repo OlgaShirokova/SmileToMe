@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableHighlight, Alert, ActivityIndic
 import { Facebook } from 'expo';
 import { connect } from 'react-redux'
 import * as actions from '../actions'
+import { Foundation } from '@expo/vector-icons'
 
 
 

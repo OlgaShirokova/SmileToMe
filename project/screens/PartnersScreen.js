@@ -1,19 +1,35 @@
 import React, { Component } from 'react'
-import { ScrollView, View, Text, StyleSheet, Image } from 'react-native'
-import { Ionicons } from '@expo/vector-icons'
+import { ScrollView, View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { Ionicons, SimpleLineIcons } from '@expo/vector-icons'
+import { connect } from 'react-redux'
+import * as actions from '../actions'
 
+
+const Logout = (props) => {
+  return (
+    <TouchableOpacity onPress={() => props.dispatch({ type: 'LOGOUT' })}>
+      <SimpleLineIcons size={24} name="logout" color="#FF585B" style={{ marginRight: 20 }}/>
+    </TouchableOpacity>
+  )
+}
+
+const ConnectedLogout = connect()(Logout)
 
 export default class PartnersScreen extends Component {
   static navigationOptions = {
     title: "Partners",
     tabBarIcon: ({ tintColor, focused }) =>
-      <Ionicons name={`ios-ribbon${focused ? '' : '-outline'}`} color={tintColor} size={30} />
+      <Ionicons name={`ios-ribbon${focused ? '' : '-outline'}`} color={tintColor} size={30} />,
+    headerRight: <ConnectedLogout />,
+
   }
   state = {}
   render () {
     return (
       <ScrollView contentContainerStyle={styles.container}>
+
         <View style={[styles.containerPoints, styles.shadowisation]}>
+
           <Text style={styles.numberPoints}>460</Text>
           <Text style={styles.strPointsHeader}>points</Text>
         </View>

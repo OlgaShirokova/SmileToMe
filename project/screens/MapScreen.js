@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, Dimensions, ActivityIndicator } from 'react-native'
-import { Ionicons } from '@expo/vector-icons'
-import { MapView, } from 'expo'
+import { Ionicons, Foundation } from '@expo/vector-icons'
+import { MapView } from 'expo'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 const { Marker } = MapView
@@ -9,6 +9,7 @@ import { Constants, Location, Permissions } from 'expo';
 import Button from '../components/Button'
 import Timer from '../components/Timer'
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window')
+
 
 
 
@@ -51,7 +52,11 @@ class MapScreen extends Component {
   _renderMakers = () => {
     return this.props.users.map(user => {
       return (
-        <Marker key={user.uid} coordinate={user.coords} />
+        <Marker key={user.uid} coordinate={user.coords}>
+          {
+            <Foundation name="marker" size={38} color={user.uid === this.props.auth.authedUID ? 'black' : '#FF585B'} />
+          }
+        </Marker>
       )
     })
   }
@@ -183,7 +188,8 @@ function mapStateToProps ({ users, auth, game }) {
     users: Object.values(users),
     requestMade,
     requestReceived,
-    game
+    game,
+    auth,
   }
 }
 
