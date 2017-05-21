@@ -81,6 +81,8 @@ export const challengeStart = () => async (dispatch, getState) => {
 
 // async function sendChallenge ({ contactUID, contactChallenge, challenge, authUid }) {
   async function sendChallenge (users) {
+  const contactP = { ...contactChallenge, requestReceived: authUid }
+  const userP = { ...challenge, requestMade: authUid }
 
   await firebase.database()
   .ref('users/')

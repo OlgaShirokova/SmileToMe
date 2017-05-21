@@ -7,11 +7,13 @@ import * as actions from '../actions'
 const { Marker } = MapView
 import { Constants, Location, Permissions } from 'expo';
 import Button from '../components/Button'
+import Timer from '../components/Timer'
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window')
 
 
 
 class MapScreen extends Component {
+
   static navigationOptions = {
     title: "Explore",
     tabBarIcon: ({ tintColor, focused }) =>
@@ -19,8 +21,8 @@ class MapScreen extends Component {
   }
 
   state = {
-    latitude: 37.78825,
-    longitude: -122.4324,
+    latitude: 41.39772724364083,
+    longitude: 2.1906865853836672,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   }
@@ -59,7 +61,7 @@ class MapScreen extends Component {
   }
 
   _handleChallengeStart = () => {
-    this.props.challengeStart()
+    this.props.navigation.navigate('modal')
   }
 
   _renderLoadingIndicator () {
@@ -74,13 +76,12 @@ class MapScreen extends Component {
 
         </MapView>
         <ActivityIndicator color="black" size="large" style={styles.loadingIndicator} />
-        <Button onPress={() => this.props.navigation.navigate('modal')} />
+
       </View>
     )
   }
 
-
-  _renderMainScreen () {
+  _gameStarted () {
     return (
       <View style={{flex: 1}}>
         <MapView
@@ -91,27 +92,37 @@ class MapScreen extends Component {
           { this._renderMakers() }
 
         </MapView>
-        <View style={styles.buttonContainer}>
-          <Button onPress={this._handleChallengeStart} title="Search for challenges" />
-        </View>
         <View style={styles.counterContainer}>
           <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={styles.counter}>5:12</Text>
-            <Ionicons style={styles.clockIcon} name="ios-time-outline" color="#FF2B53" size={34} />
+            <Timer />
           </View>
         </View>
       </View>
     )
   }
 
-  render () {
-    if (this.props.requestReceived) {
-      this.props.navigation.navigate('modal')
-    }
 
-    return this.props.requestMade ?
-      this._renderLoadingIndicator() :
-      this._renderMainScreen()
+  _gameNoStarted () {
+    return (
+      <View style={{flex: 1}}>
+        <MapView
+          onRegionChange={this._handleRegionChange}
+          style={styles.container}
+          initialRegion={this.state}
+        >
+          { this._renderMakers() }
+
+        </MapView>
+<View style={styles.buttonContainer}>
+          <Button onPress={this._handleChallengeStart} title="Search for challenges" />
+        </View>
+      </View>
+    )
+  }
+
+  render () {
+    console.log(this.props.game)
+    return this.props.game ? this._gameStarted() : this._gameNoStarted()
   }
 }
 
@@ -151,7 +162,7 @@ const styles = StyleSheet.create({
 })
 
 
-function mapStateToProps ({ users, auth }) {
+function mapStateToProps ({ users, auth, game }) {
   let requestMade;
   let requestReceived;
 
@@ -172,6 +183,7 @@ function mapStateToProps ({ users, auth }) {
     users: Object.values(users),
     requestMade,
     requestReceived,
+    game
   }
 }
 

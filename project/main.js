@@ -20,6 +20,7 @@ class AppContainer extends React.Component {
       <Provider store={store}>
         <ConnectedApp {...this.props} />
       </Provider>
+
     )
   }
 }
@@ -27,6 +28,7 @@ class AppContainer extends React.Component {
 
 class App extends React.Component {
   render() {
+    console.log(this.props.game)
     const MainNavigator = StackNavigator({
       main: { screen: TabNavigator({
         map: { screen: MapScreen },
@@ -48,8 +50,8 @@ class App extends React.Component {
 }
 
 
-function mapStateToProps ({ auth }) {
-  return { uid: auth.authedUID }
+function mapStateToProps ({ auth, game }) {
+  return { uid: auth.authedUID, game }
 }
 
 const ConnectedApp = connect(mapStateToProps)(App)

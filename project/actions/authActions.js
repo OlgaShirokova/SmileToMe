@@ -62,7 +62,7 @@ function listenerForNewLocation (uid) {
   Location.watchPositionAsync({ enableHighAccuracy: true, distanceInterval: 1 }, ({ coords }) => {
 
   const { latitude, longitude } = coords
-  console.warn(JSON.stringify({latitude, longitude}))
+  // console.warn(JSON.stringify({latitude, longitude}))
   firebase.database()
   .ref(`users/${uid}`)
   .update({ coords: { latitude, longitude }})
