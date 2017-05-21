@@ -23,7 +23,7 @@ class LoginScreen extends Component {
 
   _renderLoadingIndicator () {
     return (
-      <Image source={require('../assets/theGif.gif')} style={styles.container}>
+      <Image source={require('../assets/theFinalGif.gif')} style={styles.container}>
         <Image source={require('../assets/logo.png')} style={styles.logo} />
         <Text style={styles.title}>Smile to Me</Text>
         <ActivityIndicator color="white" size="large" style={styles.loadingIndicator} />
