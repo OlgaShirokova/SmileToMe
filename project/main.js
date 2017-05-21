@@ -43,6 +43,7 @@ class App extends React.Component {
   } })
 
     return  this.props.uid ? <MainNavigator /> : <LoginScreen />
+    // return  this.props.uid ? <MainNavigator /> : <MainNavigator />
   }
 }
 

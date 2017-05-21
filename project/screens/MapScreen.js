@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Dimensions } from 'react-native'
+import { View, Text, StyleSheet, Dimensions, ActivityIndicator } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { MapView, } from 'expo'
 import { connect } from 'react-redux'
@@ -62,8 +62,25 @@ class MapScreen extends Component {
     this.props.challengeStart()
   }
 
-  render () {
+  _renderLoadingIndicator () {
+    return (
+      <View style={{flex: 1}}>
+        <MapView
+          onRegionChange={this._handleRegionChange}
+          style={styles.container}
+          initialRegion={this.state}
+        >
+          { this._renderMakers() }
 
+        </MapView>
+        <ActivityIndicator color="black" size="large" style={styles.loadingIndicator} />
+        <Button onPress={() => this.props.navigation.navigate('modal')} />
+      </View>
+    )
+  }
+
+
+  _renderMainScreen () {
     return (
       <View style={{flex: 1}}>
         <MapView
@@ -85,6 +102,16 @@ class MapScreen extends Component {
         </View>
       </View>
     )
+  }
+
+  render () {
+    if (this.props.requestReceived) {
+      this.props.navigation.navigate('modal')
+    }
+
+    return this.props.requestMade ?
+      this._renderLoadingIndicator() :
+      this._renderMainScreen()
   }
 }
 
@@ -113,14 +140,38 @@ const styles = StyleSheet.create({
     backgroundColor:'transparent',
     paddingLeft: 4,
     paddingTop: 4,
+  },
+  loadingIndicator: {
+    position: 'absolute',
+    left: 200,
+    height: 500,
+    transform: [ {scale: 3}],
   }
 
 })
 
 
-function mapStateToProps ({ users }) {
+function mapStateToProps ({ users, auth }) {
+  let requestMade;
+  let requestReceived;
+
+  if (Object.keys(users).length && users[auth.authedUID].challenge) {
+    requestMade = !!users[auth.authedUID].challenge.requestMade
+  } else {
+    requestMade = false
+  }
+
+  if (Object.keys(users).length && users[auth.authedUID].challenge) {
+    requestReceived = !!users[auth.authedUID].challenge.requestReceived
+  } else {
+    requestReceived = false
+  }
+
+
   return {
     users: Object.values(users),
+    requestMade,
+    requestReceived,
   }
 }
 

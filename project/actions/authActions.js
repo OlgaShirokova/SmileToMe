@@ -9,7 +9,7 @@ import { Constants, Location, Permissions } from 'expo'
 
 export const signIn = () => async dispatch => {
   dispatch({ type: SIGN_IN })
-  await Permissions.askAsync(Permissions.LOCATION); // change location of this code
+  // await Permissions.askAsync(Permissions.LOCATION); // change location of this code
   const { token, type } = await Facebook.logInWithReadPermissionsAsync('1993780664185469', {})
   if (type !== 'success') return undefined;
 
@@ -17,6 +17,9 @@ export const signIn = () => async dispatch => {
 
   const { uid, displayName, photoURL } = await firebase.auth().signInWithCredential(credential);
   let { coords: { latitude, longitude } } = await Location.getCurrentPositionAsync({});
+
+
+
 
   const user = {
     uid,
@@ -27,10 +30,23 @@ export const signIn = () => async dispatch => {
     coords: {
       latitude,
       longitude,
+    },
+    challenge: {
+      requestMade: null,
+      requestReceived: null,
+      activeChallenge: null,
     }
   }
 
 
+
+/*
+challenge
+  requestsMade: null || [uid]
+  requestReceived: null || [uid]
+  activeChallenge: null || { startedAt: [timestamp], peer: [uid], message: [random message] }
+
+*/
 
   await firebase.database()
   .ref(`users/${uid}`)
@@ -53,3 +69,5 @@ function listenerForNewLocation (uid) {
 
   })
 }
+
+

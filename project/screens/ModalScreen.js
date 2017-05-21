@@ -1,14 +1,19 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
+import Button from '../components/Button'
+import * as actions from '../actions'
+import { connect } from 'react-redux'
 
-export default class ModalScreen extends Component {
+class ModalScreen extends Component {
   static navigationOptions = {
     header: null
   }
 
   state = {}
-  render () {
+
+
+  _renderDefaultModal () {
     return (
       <View style={styles.container}>
         <View style={styles.modalContainer}>
@@ -18,6 +23,33 @@ export default class ModalScreen extends Component {
         </View>
       </View>
     )
+  }
+
+  _handleAcceptChallenge = () => {
+    this.props.declineChallenge()
+  }
+
+  _handleDeclineChallenge = () => {
+    this.props.timeoutChallenge()
+  }
+
+
+  _renderChallengeModal () {
+    return (
+      <View style={styles.container}>
+        <View style={styles.modalContainer}>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.goBack()}
+            style={styles.closeBtnContainer}><Entypo name="cross" size={38} color="#FF585B" style={styles.closeBtn} /></TouchableOpacity>
+            <Button title="Accept" style={styles.btnn} onPress={this._handleAcceptChallenge} onPr/>
+            <Button title="Decline" backgroundColor="black" style={styles.btnn} onPress={this._handleDeclineChallenge} />
+        </View>
+      </View>
+    )
+  }
+
+  render () {
+    return this._renderChallengeModal()
   }
 }
 
@@ -46,4 +78,10 @@ const styles = StyleSheet.create({
     margin: 4,
     alignSelf: 'flex-start',
   },
+  btnn: {
+    marginBottom: 20,
+  }
 })
+
+
+export default connect(null, actions)(ModalScreen)
